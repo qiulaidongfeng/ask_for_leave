@@ -127,7 +127,7 @@ func Route(s *gin.Engine) {
 	s.POST("/approve", func(ctx *gin.Context) {
 		u, name := pre_op(ctx)
 		r := &Request{ID: uint(u)}
-		result := db.Model(&r).Updates(&Request{Reviewer: name, Approve: true, ReviewerTime: time.Now()})
+		result := db.Model(&r).Updates(&Request{Reviewer: name, Approve: true, ReviewerTime: time.Now().UTC().Add(8 * time.Hour)})
 		if result.Error != nil {
 			panic(result.Error)
 		}
@@ -136,7 +136,7 @@ func Route(s *gin.Engine) {
 	s.POST("/refuse", func(ctx *gin.Context) {
 		u, name := pre_op(ctx)
 		r := &Request{ID: uint(u)}
-		result := db.Model(&r).Updates(&Request{Reviewer: name, Approve: false, ReviewerTime: time.Now()})
+		result := db.Model(&r).Updates(&Request{Reviewer: name, Approve: false, ReviewerTime: time.Now().UTC().Add(8 * time.Hour)})
 		if result.Error != nil {
 			panic(result.Error)
 		}
