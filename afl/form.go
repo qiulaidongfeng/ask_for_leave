@@ -65,7 +65,7 @@ var db = func() *gorm.DB {
 	if err != nil {
 		panic(err)
 	}
-	err = db.AutoMigrate(&Request{})
+	err = db.AutoMigrate(&Request{}, &Root{})
 	if err != nil {
 		panic(err)
 	}
