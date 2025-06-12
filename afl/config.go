@@ -1,4 +1,4 @@
-package main
+package afl
 
 import (
 	"fmt"

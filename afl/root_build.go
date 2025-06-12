@@ -1,6 +1,6 @@
 //go:build make_root
 
-package main
+package afl
 
 import (
 	"crypto/sha512"
