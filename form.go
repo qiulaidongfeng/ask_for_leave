@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/qiulaidongfeng/nonamevote/nonamevote"
 	"github.com/qiulaidongfeng/safesession"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -191,8 +192,7 @@ func GetAll(name string) *Review {
 }
 
 var c = safesession.NewControl(
-	//TODO:使用密钥
-	[32]byte{},
+	nonamevote.GetAeskey(),
 	2*365*24*time.Hour,
 	http.SameSiteLaxMode,
 	func(clientIp string) safesession.IPInfo {
