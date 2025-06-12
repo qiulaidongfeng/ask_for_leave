@@ -11,7 +11,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-func MakeRoot(s *gin.Context) {
+func MakeRoot(s *gin.Engine) {
 	db.AutoMigrate(&Root{})
 	//Note:仅在使用特定构建标签时启用这里，且应当只部署到受信任的内网，
 	//所以这里不需要额外的安全措施。
