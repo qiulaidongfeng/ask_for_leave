@@ -16,8 +16,8 @@ import (
 )
 
 type Request struct {
-	ID         uint      `gorm:"primaryKey,autoIncrement"`
-	Created    time.Time `gorm:"autoCreateTime"`
+	ID         uint `gorm:"primaryKey,autoIncrement"`
+	Created    time.Time
 	Name       string    `form:"name" binding:"required"`
 	Department string    `form:"department" binding:"required"`
 	Reason     string    `form:"reason" binding:"required"`
@@ -74,6 +74,7 @@ var db = func() *gorm.DB {
 
 func (r *Request) ToDb() uint {
 	//TODO:随机生成ID
+	r.Created = time.Now().UTC().Add(8 * time.Hour)
 	result := db.Create(r)
 	if result.Error != nil {
 		panic(result.Error)
