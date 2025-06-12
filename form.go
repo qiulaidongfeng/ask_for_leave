@@ -58,8 +58,9 @@ func ParserRequest(ctx *gin.Context) *Request {
 }
 
 var db = func() *gorm.DB {
-	//TODO:从配置文件读取dsn
-	dsn := "root:123456@tcp(127.0.0.1:3306)/afl?charset=utf8mb4&parseTime=True&loc=Local"
+	v = newv()
+	user, password, addr := GetDsnInfo()
+	dsn := user + ":" + password + "@tcp(" + addr + ")/afl?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
