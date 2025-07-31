@@ -152,6 +152,11 @@ func search(ctx *gin.Context, id string) {
 		return
 	}
 	r := Search(uint(u))
+	if r == nil {
+		//TODO:更好的处理
+		ctx.String(http.StatusBadRequest, "未找到此编号的申请")
+		return
+	}
 	var buf bytes.Buffer
 	err = t.Execute(&buf, r)
 	if err != nil {

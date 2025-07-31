@@ -86,6 +86,9 @@ func Search(id uint) *Request {
 	var ret Request
 	ret.ID = id
 	result := db.First(&ret)
+	if result.Error == gorm.ErrRecordNotFound {
+		return nil
+	}
 	if result.Error != nil {
 		panic(result.Error)
 	}
