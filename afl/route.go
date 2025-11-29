@@ -112,6 +112,7 @@ func Route(s *gin.Engine) {
 		if result.Error == gorm.ErrRecordNotFound {
 			// TODO:返回html
 			ctx.String(401, "无此审批者或密码错误")
+			return
 		} else if result.Error != nil {
 			panic(result.Error)
 		}
