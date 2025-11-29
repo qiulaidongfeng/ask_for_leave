@@ -35,7 +35,7 @@ func Route(s *gin.Engine) {
 			return
 		}
 		var r = Request{ID: uint(u)}
-		if result := db.Model(&Request{}).Find(&r); result.Error != nil {
+		if result := db.Model(&Request{}).Where(&r).First(&r); result.Error != nil {
 			panic(result.Error)
 		}
 		if r.Reviewer == "" {
@@ -108,10 +108,11 @@ func Route(s *gin.Engine) {
 		}
 		s := sha512.Sum512([]byte(r.Password))
 		r.Password = base64.StdEncoding.EncodeToString(s[:])
-		result := db.Find(r)
+		result := db.Where(r).Take(r)
 		if result.Error == gorm.ErrRecordNotFound {
 			// TODO:返回html
 			ctx.String(401, "无此审批者或密码错误")
+			return
 		} else if result.Error != nil {
 			panic(result.Error)
 		}

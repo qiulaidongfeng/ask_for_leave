@@ -218,7 +218,7 @@ var c = safesession.NewControl(
 		},
 		Exist: func(ID string) bool {
 			r := Root{SessionID: ID}
-			result := db.Find(&r)
+			result := db.Where(&r).Take(&r)
 			if result.Error != nil {
 				panic(result.Error)
 			}
@@ -226,7 +226,7 @@ var c = safesession.NewControl(
 		},
 		Valid: func(UserName, SessionID string) error {
 			r := Root{Name: UserName}
-			result := db.Find(&r)
+			result := db.Where(&r).Take(&r)
 			if result.Error != nil {
 				panic(result.Error)
 			}
