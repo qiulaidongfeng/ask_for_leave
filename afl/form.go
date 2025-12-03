@@ -219,7 +219,7 @@ var c = safesession.NewControl(
 		Exist: func(ID string) bool {
 			r := Root{SessionID: ID}
 			result := db.Where(&r).Take(&r)
-			if result.Error != nil {
+			if result.Error != nil && result.Error != gorm.ErrRecordNotFound {
 				panic(result.Error)
 			}
 			return r.Name != ""
@@ -230,7 +230,7 @@ var c = safesession.NewControl(
 			if result.Error != nil {
 				panic(result.Error)
 			}
-			if r.SessionID == SessionID {
+			if r.SessionID == SessionID && result.Error != gorm.ErrRecordNotFound {
 				return nil
 			}
 			return errors.New("未登录或登录已失效")
